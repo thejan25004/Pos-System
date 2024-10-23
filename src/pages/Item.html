@@ -13,12 +13,6 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Sidebar Styling */
-        .sidebar {
-            background-color: #1c1f2f;
-            height: 100vh;
-            padding: 30px 20px;
-        }
         .sidebar h2 {
             color: white;
             font-size: 24px;
@@ -39,6 +33,7 @@
         .content {
             background-color: #bcc8d6;
             height: 100vh;
+            width: 100vw;
             padding: 30px;
             overflow-y: auto;
         }
@@ -50,6 +45,7 @@
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
+            width: 100%;
         }
         .table th {
             background-color: #888888;
@@ -85,24 +81,45 @@
             margin-right: 10px;
         }
 
-        .table {
-            background-color: white;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            .table th, .table td {
+                font-size: 12px; /* Reduce font size on smaller screens */
+            }
+
+            .header {
+                flex-direction: column; /* Stack header items */
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            /* Reduce padding for mobile */
+            .form-container, .content {
+                padding: 10px;
+            }
+
+            .table {
+                font-size: 10px;
+                width: 100%;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 <body>
 
+<!--item-->
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar">
-            <h2>ZARA</h2>
-            <a href="Dashboard.html">DashBoard</a>
-            <a href="Customer.html">Customers</a>
-            <a href="Item.html">Items</a>
-            <a href="#">Orders</a>
-        </div>
-
         <!-- Content Area -->
         <div class="col-md-10 content">
             <div class="header">
@@ -167,9 +184,41 @@
                     <td>50</td>
                     <td>555-1234</td>
                 </tr>
-                <!-- More rows can be added here -->
+                <!-- More item rows go here -->
+                <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>

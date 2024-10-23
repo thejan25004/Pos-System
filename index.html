@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #DASHBOARD , #CUSTOMER , #ITEMS , #ORDERS{
+            position: absolute;
+            top: 8vh;
+        }
+
+        .navbar {
+            z-index: 1;
+            background-color: #1F2E43;
+            position: fixed;
+            width: 100vw;
+            height: 8vh;
+        }
+        .navbar-brand, .nav-link {
+            color: white;
+            cursor: pointer;
+        }
+
+
+        .sidebar h2 {
+            color: white;
+            font-size: 24px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin: 15px 0;
+        }
+        .sidebar a:hover {
+            background-color: #3a405a;
+            padding: 10px;
+
+        }
+
+        /* Content Area */
+        .content {
+            background-color: #7993A5;
+            padding: 30px;
+            height: 92vh;
+            width: 100vw;
+        }
+        /* Card Styling */
+        .card {
+            border-radius: 15px;
+            /*background-color: #d2b48c;*/
+            text-align: center;
+        }
+
+        #firstCard{
+            background-color: #C7BCAB;
+        }
+
+        #secondCard{
+            background-color: #E6E1DB;
+        }
+        #thirdCard{
+            background-color: #C7BCAB;
+        }
+
+        .card img {
+            width: 40px;
+            margin-bottom: 10px;
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .table {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #888888;
+            color: white;
+        }
+
+        /* Header section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .header .developer-info {
+            font-size: 14px;
+        }
+
+        .form-container {
+            background-color: #e7e7e7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*=========================== Media Queries for Responsive Design for DashBoard =================================*/
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .card-text {
+                font-size: 24px;
+            }
+
+            .table {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card img {
+                width: 30px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .card-text {
+                font-size: 20px;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+        }
+
+
+        @media (max-width: 576px) {
+            .table th, .table td {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .table {
+                width: 100%;
+                display: block;
+                overflow-x: auto; /* Enables horizontal scrolling */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table th, .table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+
+
+        /*====================== Responsive Design  for Customer ===================================*/
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            .table th, .table td {
+                font-size: 12px; /* Reduce font size on smaller screens */
+            }
+
+            /* Stack form fields vertically on smaller screens */
+            .form-container .row {
+                display: block;
+            }
+
+            .form-container .col {
+                width: 100%; /* Full width on mobile */
+            }
+
+            .header {
+                flex-direction: column; /* Stack header items */
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            /* Reduce padding for mobile */
+            .form-container, .content {
+                padding: 10px;
+            }
+
+            .table {
+                font-size: 10px;
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+
+            /*==================Responsive for Orders=============*/
+        @media (max-width: 480px) {
+            .form-container .btn {
+                font-size: 0.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg nav-bar" >
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">MANAGMENT SYSTEM OF ZARA </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <span class="nav-link" id="dashboard-nav">DashBoard</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link" id="customer-nav">Customers</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link" id="item-nav">Items</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link" id="order-nav">Orders</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--Dahboard-->
+<div class="container-fluid" id="DASHBOARD">
+    <div class="row">
+        <!-- Navigation Bar -->
+
+        <!-- Content Area -->
+        <div class="col-md-10 content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="developer-info">
+                    <p>Developed By RCT Developer</p>
+                </div>
+            </div>
+
+            <!-- Cards for statistics -->
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="card p-3 mb-4" id="firstCard">
+                        <div class="card-body">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/in-inventory.png" alt="Customers Icon">
+                            <h5 class="card-title">Total Customers</h5>
+                            <p class="card-text fs-1">75</p>
+                            <p>All Customer Count</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 mb-4" id="secondCard">
+                        <div class="card-body">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/box.png" alt="Orders Icon">
+                            <h5 class="card-title">One Day Orders</h5>
+                            <p class="card-text fs-1">75</p>
+                            <p>All Customer Count</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 mb-4" id="thirdCard">
+                        <div class="card-body">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/in-inventory.png" alt="Items Icon">
+                            <h5 class="card-title">Available Items</h5>
+                            <p class="card-text fs-1">75</p>
+                            <p>All Customer Count</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table of Customers -->
+            <h3>Table of Customers</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Customer Email</th>
+                    <th>Customer NIC</th>
+                    <th>Customer Tel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>John Doe</td>
+                    <td>123 Main St</td>
+                    <td>john@example.com</td>
+                    <td>123456789V</td>
+                    <td>555-1234</td>
+                </tr>
+
+                <tr>
+                    <td>002</td>
+                    <td>Jane Smith</td>
+                    <td>456 Oak Ave</td>
+                    <td>987654321V</td>
+                    <td>555-5678</td>
+                    <td>jane@example.com</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Michael Johnson</td>
+                    <td>789 Maple Blvd</td>
+                    <td>192837465V</td>
+                    <td>555-8765</td>
+                    <td>michael@example.com</td>
+                </tr>
+                <tr>
+                    <td>004</td>
+                    <td>Emily Davis</td>
+                    <td>321 Pine Lane</td>
+                    <td>918273645V</td>
+                    <td>555-2345</td>
+                    <td>emily@example.com</td>
+                </tr>
+                <tr>
+                    <td>005</td>
+                    <td>Chris Brown</td>
+                    <td>654 Cedar St</td>
+                    <td>827364918V</td>
+                    <td>555-3456</td>
+                    <td>chris@example.com</td>
+                </tr>
+                <tr>
+                    <td>006</td>
+                    <td>Jessica Taylor</td>
+                    <td>987 Willow Way</td>
+                    <td>273645819V</td>
+                    <td>555-4567</td>
+                    <td>jessica@example.com</td>
+                </tr>
+                <tr>
+                    <td>007</td>
+                    <td>David Martinez</td>
+                    <td>159 Birch Rd</td>
+                    <td>364192837V</td>
+                    <td>555-5679</td>
+                    <td>david@example.com</td>
+                </tr>
+
+                <!-- More rows can be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!--customer-->
+<div class="container-fluid" id="CUSTOMER">
+    <div class="row">
+        <!-- Content Area -->
+        <div class="col content">
+            <div class="header">
+                <h1>Customer Form</h1>
+            </div>
+
+            <!-- Customer Form -->
+            <div class="form-container">
+                <h3>Enter Customer Details</h3>
+                <form>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="customerId" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" id="customerIdOfCustomerPage" placeholder="Enter Customer ID">
+                        </div>
+                        <div class="col">
+                            <label for="customerName" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customerNameOfCustomerPage" placeholder="Enter Customer Name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="customerAddress" class="form-label">Customer Address</label>
+                            <input type="text" class="form-control" id="customerAddress" placeholder="Enter Customer Address">
+                        </div>
+                        <div class="col">
+                            <label for="customerNic" class="form-label">Customer NIC</label>
+                            <input type="text" class="form-control" id="customerNic" placeholder="Enter Customer NIC">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="customerTel" class="form-label">Customer Tel</label>
+                            <input type="text" class="form-control" id="customerTel" placeholder="Enter Customer Tel">
+                        </div>
+                        <div class="col">
+                            <label for="customerGmail" class="form-label">Customer Gmail</label>
+                            <input type="email" class="form-control" id="customerGmail" placeholder="Enter Customer Gmail">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add New Customer</button>
+                    <button type="reset" class="btn btn-warning">Clear</button>
+                </form>
+            </div>
+
+            <!-- Table of Customers -->
+            <h3>Table of Customers</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
+                        <th>Customer Address</th>
+                        <th>Customer NIC</th>
+                        <th>Customer Tel</th>
+                        <th>Customer Gmail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123 Main St</td>
+                        <td>123456789V</td>
+                        <td>555-1234</td>
+                        <td>john@example.com</td>
+                    </tr>
+                    <!-- Add more rows as necessary -->
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123 Main St</td>
+                        <td>123456789V</td>
+                        <td>555-1234</td>
+                        <td>john@example.com</td>
+                    </tr>       <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123 Main St</td>
+                        <td>123456789V</td>
+                        <td>555-1234</td>
+                        <td>john@example.com</td>
+                    </tr>       <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>123 Main St</td>
+                        <td>123456789V</td>
+                        <td>555-1234</td>
+                        <td>john@example.com</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--item-->
+<div class="container-fluid" id="ITEMS">
+    <div class="row">
+        <!-- Content Area -->
+        <div class="col-md-10 content">
+            <div class="header">
+                <h1>Item Form</h1>
+<!--                <div class="developer-info">-->
+<!--                    <p>Developed By RCT Developer</p>-->
+<!--                </div>-->
+            </div>
+
+            <!-- Item Form -->
+            <div class="form-container">
+                <h3>Enter Item Details</h3>
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="itemId" class="form-label">Item ID</label>
+                            <input type="text" class="form-control" id="itemIdofItemPage" placeholder="Enter Item ID">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter Item Description">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="unitPrice" class="form-label">Unit Price</label>
+                            <input type="text" class="form-control" id="unitPriceofItemPage" placeholder="Enter Unit Price">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="qty" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="qty" placeholder="Enter Quantity">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tel" class="form-label">Tel</label>
+                            <input type="text" class="form-control" id="tel" placeholder="Enter Contact Number">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add New Item</button>
+                    <button type="reset" class="btn btn-warning">Clear</button>
+                </form>
+            </div>
+
+            <!-- Table of Items -->
+            <h3>Table of Items</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Description</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Tel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>
+                <!-- More item rows go here -->
+                <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>         <tr>
+                    <td>001</td>
+                    <td>Item Example</td>
+                    <td>$20.00</td>
+                    <td>50</td>
+                    <td>555-1234</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- Orders -->
+<div class="container-fluid" id="ORDERS">
+    <div class="row">
+        <!-- Content Area -->
+        <div class="col-md-10 content">
+            <div class="header">
+                <h1>Manage Orders</h1>
+<!--                <div class="developer-info">-->
+<!--                    <p>Developed By RCT Developer</p>-->
+<!--                </div>-->
+            </div>
+
+            <!-- Orders Form -->
+            <div class="form-container">
+                <h3>Enter Order Details</h3>
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="orderId" class="form-label">Order ID</label>
+                            <input type="text" class="form-control" id="orderId" placeholder="Enter Order ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customerId" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" id="customerId" placeholder="Enter Customer ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customerName" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Enter Customer Name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="itemId" class="form-label">Item ID</label>
+                            <input type="text" class="form-control" id="itemId" placeholder="Enter Item ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="itemModel" class="form-label">Item Model</label>
+                            <input type="text" class="form-control" id="itemModel" placeholder="Enter Item Model">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="unitPrice" class="form-label">Item Unit Price</label>
+                            <input type="text" class="form-control" id="unitPrice" placeholder="Enter Unit Price">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="itemQty" class="form-label">Item Quantity</label>
+                            <input type="number" class="form-control" id="itemQty" placeholder="Enter Quantity">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Add</button>
+                    <button type="submit" class="btn btn-primary">Add New Order</button>
+                    <button type="submit" class="btn btn-success">Place Order</button>
+                </form>
+            </div>
+
+            <!-- Table of Orders -->
+            <h3>Table of Orders</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Item ID</th>
+                    <th>Item Model</th>
+                    <th>Unit Price</th>
+                    <th>Qty</th>
+                    <th>Total Cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>1001</td>
+                    <td>John Doe</td>
+                    <td>5001</td>
+                    <td>Item-X</td>
+                    <td>$20.00</td>
+                    <td>2</td>
+                    <td>$40.00</td>
+                </tr>
+                <!-- Additional rows can go here -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="src/script.js"></script>
+</body>
+</html>
