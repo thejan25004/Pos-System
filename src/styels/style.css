@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #7993A5;
+}
+
+#DASHBOARD , #CUSTOMER , #ITEMS , #ORDERS{
+    position: absolute;
+    top: 8vh;
+}
+
+.navbar {
+    z-index: 1;
+    background-color: #1F2E43;
+    position: fixed;
+    width: 100vw;
+    height: 8vh;
+}
+.navbar-brand, .nav-link {
+    color: white;
+    cursor: pointer;
+}
+
+
+.sidebar h2 {
+    color: white;
+    font-size: 24px;
+}
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    margin: 15px 0;
+}
+.sidebar a:hover {
+    background-color: #3a405a;
+    padding: 10px;
+
+}
+
+/* Content Area */
+.content {
+    background-color: #7993A5;
+    padding: 30px;
+    /*height: 92vh;*/
+    height: auto;
+    width: 100vw;
+}
+/* Card Styling */
+.card {
+    border-radius: 15px;
+    /*background-color: #d2b48c;*/
+    text-align: center;
+}
+
+#firstCard{
+    background-color: #C7BCAB;
+}
+
+#secondCard{
+    background-color: #E6E1DB;
+}
+#thirdCard{
+    background-color: #C7BCAB;
+}
+
+.card img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+.table {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.table th {
+    background-color: #888888;
+    color: white;
+}
+
+/* Header section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.header h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+.header .developer-info {
+    font-size: 14px;
+}
+
+.form-container {
+    background-color: #e7e7e7;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

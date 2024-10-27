@@ -1,0 +1,114 @@
+
+/*=========================== Media Queries for Responsive Design for DashBoard =================================*/
+@media (max-width: 768px) {
+    .content {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .card-text {
+        font-size: 24px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card img {
+        width: 30px;
+    }
+
+    .card-title {
+        font-size: 16px;
+    }
+
+    .card-text {
+        font-size: 20px;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .table th, .table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .table {
+        width: 100%;
+        display: block;
+        overflow-x: auto; /* Enables horizontal scrolling */
+    }
+}
+
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+
+
+/*====================== Responsive Design  for Customer ===================================*/
+@media (max-width: 768px) {
+    .content {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        font-size: 12px; /* Reduce font size on smaller screens */
+    }
+
+    /* Stack form fields vertically on smaller screens */
+    .form-container .row {
+        display: block;
+    }
+
+    .form-container .col {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .header {
+        flex-direction: column; /* Stack header items */
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 18px;
+    }
+
+    /* Reduce padding for mobile */
+    .form-container, .content {
+        padding: 10px;
+    }
+
+    .table {
+        font-size: 10px;
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+/*==================Responsive for Orders=============*/
+@media (max-width: 480px) {
+    .form-container .btn {
+        font-size: 0.5em;
+    }
+}
