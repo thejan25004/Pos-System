@@ -108,3 +108,12 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+.btn-delete{
+    background-color: red;
+    color: #e7e7e7;
+}
+
+#orderTotaldiv{
+    margin-top: 10px;
+}
