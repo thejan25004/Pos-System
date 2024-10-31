@@ -1,7 +1,7 @@
-// import CustomerModel from "../models/CustomerModel.js";
+
 import CustomerModel from "../models/CustomerModel.js";
 import {Customer_array, Item_array} from "../db/database.js";
-
+import {setDataDropdowns} from "./OrderController.js";
 let selected_customer_index = null;
 
 
@@ -53,16 +53,13 @@ const cleanTextFields = () =>{
 // }
 
 // ADD CUSTOMER
-$("#addCustomersbtn").on("click",function () {
-
+$("#addCustomersbtn").on("click", function () {
     let Customer_ID = $("#customerIdOfCustomerPage").val();
     let Customer_Name = $("#customerNameOfCustomerPage").val();
     let Customer_Address = $("#customerAddress").val();
-    let Customer_Nic  = $("#customerNic").val();
+    let Customer_Nic = $("#customerNic").val();
     let Customer_Tel = $("#customerTel").val();
     let Customer_Gmail = $("#customerGmail").val();
-
-
 
     // regex
     let nameRegex = /^[A-Za-z]{2,30}$/; // Only letters, 2-30 characters
@@ -72,61 +69,93 @@ $("#addCustomersbtn").on("click",function () {
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Standard email format
     let addressRegex = /^.{5,100}$/; // Allows any character, 5-100 characters long
 
-    // Validation
+    // Validation with SweetAlert
     if (!nameRegex.test(Customer_Name)) {
-        alert("Invalid First Name. Use only letters (2-30 characters).");
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Name",
+            text: "Use only letters (2-30 characters).",
+        });
+        return;
+    } else if (!addressRegex.test(Customer_Address)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Address",
+            text: "Address should be 5-100 characters long.",
+        });
+        return;
+    } else if (!nicRegex.test(Customer_Nic)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid National ID",
+            text: "National ID should be exactly 12 digits long.",
+        });
+        return;
+    } else if (!IdRegex.test(Customer_ID)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Customer ID",
+            text: "Customer ID should start with 'C' followed by 3 digits.",
+        });
+        return;
+    } else if (!mobileRegex.test(Customer_Tel)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Mobile Number",
+            text: "Enter a 10-digit number.",
+        });
+        return;
+    } else if (!emailRegex.test(Customer_Gmail)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Email",
+            text: "Enter a valid email address.",
+        });
         return;
     }
-    else if (!addressRegex.test(Customer_Address)) {
-        alert("Invalid Address. Address should be 5-100 characters long.");
-        return;
-    }
-    else if (!nicRegex.test(Customer_Nic)) {
-        alert("Invalid National Id. National Id should be 1-12 characters long.");
-        return;
-    }
-    else if (!IdRegex.test(Customer_ID)) {
-        alert("Invalid Customer Id. Customer Id should be One Capital Letter C  & 3 Numbers long.");
-        return;
-    }
-    else if (!mobileRegex.test(Customer_Tel)) {
-        alert("Invalid Mobile. Enter a 10-digit number.");
-        return;
-    }
-    else if (!emailRegex.test(Customer_Gmail)) {
-        alert("Invalid Email. Enter a valid email address.");
-        return;
-    }
 
+    // Show confirmation dialog before adding the customer
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Create a new Customer object and add it to the array if confirmed
+            let CustomerObject = new CustomerModel(
+                Customer_array.length + 1,
+                Customer_ID,
+                Customer_Name,
+                Customer_Address,
+                Customer_Nic,
+                Customer_Tel,
+                Customer_Gmail
+            );
 
+            Customer_array.push(CustomerObject);
 
+            // Additional actions after saving
+            cleanTextFields();
+            loadCustomerTable();
+            loadDashboardCustomerTable();
+            setDataDropdowns();
 
-    let CustomerObject = new CustomerModel(
-        Customer_array.length + 1,
-              Customer_ID,
-              Customer_Name,
-              Customer_Address,
-              Customer_Nic,
-              Customer_Tel,
-              Customer_Gmail
-    );
-
-    Customer_array.push(CustomerObject);
-
-    cleanTextFields();
-    loadCustomerTable();
-    loadDashboardCustomerTable();
-
-    // $("#customerIdDropdown").val(CustomerObject.Customer_ID);
-
-
-    // loadCustomerDropdown();
-
+            // Show success message
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Customer has been added",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
 });
 
-// $(document).ready(() => {
-//     loadCustomerDropdown();
-// });
 
 // SELECT TABLE DETAILS
 $("#customerTableBody").on('click','tr',function () {
@@ -168,17 +197,48 @@ $("#updateCustomerbtn").on('click',function () {
 
 // DELETE CUSTOMER
 
-$("#deleteCustomerbtn").on('click',function () {
-     if (selected_customer_index !== null){
-         Customer_array.splice(selected_customer_index,1);
-         loadCustomerTable();
-         loadDashboardCustomerTable();
-         cleanTextFields();
-         selected_customer_index = null;
+// $("#deleteCustomerbtn").on('click',function () {
+//      if (selected_customer_index !== null){
+//          Customer_array.splice(selected_customer_index,1);
+//          loadCustomerTable();
+//          loadDashboardCustomerTable();
+//          cleanTextFields();
+//          selected_customer_index = null;
+//
+//      } else {
+//          console.log("No Customer Selected To Delete")
+//      }
+// });
+$("#deleteCustomerbtn").on('click', function () {
+    if (selected_customer_index !== null) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Delete customer and update tables
+                Customer_array.splice(selected_customer_index, 1);
+                loadCustomerTable();
+                loadDashboardCustomerTable();
+                cleanTextFields();
+                selected_customer_index = null;
 
-     } else {
-         console.log("No Customer Selected To Delete")
-     }
+                // Show deletion success message
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Customer has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+    } else {
+        console.log("No Customer Selected To Delete");
+    }
 });
 
 

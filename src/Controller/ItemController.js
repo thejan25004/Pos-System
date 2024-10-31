@@ -1,6 +1,6 @@
 import ItemModel from "../models/ItemModel.js";
 import {Item_array} from "../db/database.js";
-
+import {setDataDropdowns} from "./OrderController.js";
 
 let selected_item_index = null;
 
@@ -23,54 +23,93 @@ const cleanTextFields = () =>{
 }
 
 // ADD ITEM
-$("#addItemBtn").on('click',function () {
+$("#addItemBtn").on('click', function () {
     let Item_ID = $("#itemIdofItemPage").val();
     let Description = $("#itemdescriptionofItemPage").val();
     let Unit_Price = $("#unitPriceofItemPage").val();
     let qty = $("#qtyofItemPage").val();
 
-
-    // regex
+    // regex patterns
     let IdRegex = /^I\d{3}$/; // One capital letter followed by 3 digits
     let descriptionRegex = /^.{5,100}$/; // Allows any character, 5-100 characters long
-    const decimalTwoPlacesRegex = /^\d+\.\d{2}$/;
-    let numberRegex = /^[0-9]+$/;
+    const decimalTwoPlacesRegex = /^\d+\.\d{2}$/; // Matches positive number with two decimal places
+    let numberRegex = /^[0-9]+$/; // Only numbers
 
-    // Validation
+    // Validation using SweetAlert
     if (!IdRegex.test(Item_ID)) {
-        alert("Invalid Item ID . Item Id should be One Capital Letter I  & 3 Numbers long.");
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Item ID",
+            text: "Item ID should start with 'I' followed by 3 numbers.",
+        });
         return;
     }
-    else if (!descriptionRegex.test(Description)) {
-        alert("Invalid Description. Description should be 5-100 characters long.");
+    if (!descriptionRegex.test(Description)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Description",
+            text: "Description should be 5-100 characters long.",
+        });
         return;
     }
-    else if (!decimalTwoPlacesRegex.test(Unit_Price)) {
-        alert("Invalid Unit_Price . Unit_Price match a positive number with up to two decimal places");
+    if (!decimalTwoPlacesRegex.test(Unit_Price)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Unit Price",
+            text: "Unit Price should be a positive number with up to two decimal places.",
+        });
         return;
     }
-    else if (!numberRegex.test(qty)) {
-        alert("Invalid qty . qty should be all Numbers .");
+    if (!numberRegex.test(qty)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Quantity",
+            text: "Quantity should be a numeric value.",
+        });
         return;
     }
 
+    // Show confirmation dialog
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        // Check if the user confirmed
+        if (result.isConfirmed) {
+            // Create new Item object and add to array if validation passes
+            let ItemObject = new ItemModel(
+                Item_array.length + 1,
+                Item_ID,
+                Description,
+                Unit_Price,
+                qty
+            );
 
+            Item_array.push(ItemObject);
 
-    let ItemObject = new ItemModel(
-        Item_array.length + 1 ,
-        Item_ID,
-        Description,
-        Unit_Price,
-        qty
-    );
+            // Clear input fields, load tables, and dropdowns
+            cleanTextFields();
+            loadItemTable();
+            setDataDropdowns();
 
-    Item_array.push(ItemObject);
-
-    cleanTextFields();
-    loadItemTable();
-
-
+            // Show success message with "top-end" position that auto-closes
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Item has been added",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
 });
+
+
 
 
 // SELECTED TABLE DETAILS
@@ -109,15 +148,46 @@ $("#updateBtn").on('click',function () {
 
 // DELETE Items
 
-$("#deleteBtn").on('click',function () {
-    if (selected_item_index !== null){
-        Item_array.splice(selected_item_index,1);
-        loadItemTable();
-        cleanTextFields();
-        selected_item_index = null;
+// $("#deleteBtn").on('click',function () {
+//     if (selected_item_index !== null){
+//         Item_array.splice(selected_item_index,1);
+//         loadItemTable();
+//         cleanTextFields();
+//         selected_item_index = null;
+//
+//     } else {
+//         console.log("No Item Selected To Delete")
+//     }
+// });
+// Delete Item Button with Confirmation Alert
+$("#deleteBtn").on('click', function () {
+    if (selected_item_index !== null) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Delete item and update table
+                Item_array.splice(selected_item_index, 1);
+                loadItemTable();
+                cleanTextFields();
+                selected_item_index = null;
 
+                // Show deletion success message
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Item has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
     } else {
-        console.log("No Item Selected To Delete")
+        console.log("No Item Selected To Delete");
     }
 });
 

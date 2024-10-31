@@ -117,3 +117,27 @@ body {
 #orderTotaldiv{
     margin-top: 10px;
 }
+
+#orderFormContainers{
+    width: 95vw;
+    margin-left: 50px;
+}
+
+#tableOfOrders{
+    width: 95vw;
+    margin-left: 50px;
+}
+
+#saveOrderBtn{
+    width: 145px;
+}
+.justify-content-end{
+    /*background-color: #1c1f2a;*/
+    margin-top: 10px;
+
+}
+.colorsOfInputs input{
+    /*background-color:  #7993A5;*/
+    background-color: silver;
+
+}

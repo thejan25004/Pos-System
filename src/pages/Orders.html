@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Content Area */
+        .content {
+            background-color: #bcc8d6;
+            height: 100vh;
+            width: 100vw;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background-color: #888888;
+            color: white;
+        }
+
+        /* Header section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .header .developer-info {
+            font-size: 14px;
+        }
+
+        /* Form Section */
+        .form-container {
+            background-color: #e7e7e7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-container h3 {
+            margin-bottom: 20px;
+        }
+
+        .form-container .btn {
+            margin-right: 10px;
+            font-size: 1em;
+        }
+
+        /* Table Styles */
+        .table {
+            background-color: white;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+
+            .form-container h3 {
+                font-size: 18px;
+            }
+
+            .form-container .form-label {
+                font-size: 14px;
+            }
+
+            .form-container .form-control {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+            }
+
+            .table th {
+                font-size: 12px;
+            }
+
+            .table td {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .form-container h3 {
+                font-size: 16px;
+            }
+
+            .form-container .form-label {
+                font-size: 12px;
+            }
+
+            .form-container .form-control {
+                font-size: 12px;
+            }
+
+            .table th, .table td {
+                font-size: 8px;
+                padding: 5px;
+            }
+
+            .table th {
+                font-size: 8px;
+            }
+
+            .table td {
+                font-size: 9px;
+            }
+
+            .table {
+                font-size: 10px;
+            }
+
+            .form-container .btn {
+
+                font-size: 0.5em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Orders -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Content Area -->
+        <div class="col-md-10 content">
+            <div class="header">
+                <h1>Manage Orders</h1>
+                <div class="developer-info">
+                    <p>Developed By RCT Developer</p>
+                </div>
+            </div>
+
+            <!-- Orders Form -->
+            <div class="form-container">
+                <h3>Enter Order Details</h3>
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="orderId" class="form-label">Order ID</label>
+                            <input type="text" class="form-control" id="orderId" placeholder="Enter Order ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customerId" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" id="customerId" placeholder="Enter Customer ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customerName" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Enter Customer Name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="itemId" class="form-label">Item ID</label>
+                            <input type="text" class="form-control" id="itemId" placeholder="Enter Item ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="itemModel" class="form-label">Item Model</label>
+                            <input type="text" class="form-control" id="itemModel" placeholder="Enter Item Model">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="unitPrice" class="form-label">Item Unit Price</label>
+                            <input type="text" class="form-control" id="unitPrice" placeholder="Enter Unit Price">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="itemQty" class="form-label">Item Quantity</label>
+                            <input type="number" class="form-control" id="itemQty" placeholder="Enter Quantity">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Add</button>
+                    <button type="submit" class="btn btn-primary">Add New Order</button>
+                    <button type="submit" class="btn btn-success">Place Order</button>
+                </form>
+            </div>
+
+            <!-- Table of Orders -->
+            <h3>Table of Orders</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Item ID</th>
+                    <th>Item Model</th>
+                    <th>Unit Price</th>
+                    <th>Qty</th>
+                    <th>Total Cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>1001</td>
+                    <td>John Doe</td>
+                    <td>5001</td>
+                    <td>Item-X</td>
+                    <td>$20.00</td>
+                    <td>2</td>
+                    <td>$40.00</td>
+                </tr>
+                <!-- Additional rows can go here -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+<!--                    <form id="orderForm">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="orderId" class="form-label">Order ID</label>-->
+<!--                                <input type="text" id="orderId" class="form-control" placeholder="Enter Order ID">-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3 ">-->
+<!--                                <label  for="inputCustomerId" class="form-label">Customer ID</label>-->
+<!--&lt;!&ndash;                                <select id="customerIdDropdown" class="form-select">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option id="CustomerIDOptions" value="">Select Customer ID</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </select>&ndash;&gt;-->
+<!--                                    <div>-->
+<!--                                        <button  class="form-select btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" id="inputCustomerId" aria-expanded="false">select Customer Id's Here</button>-->
+<!--                                        <ul class="dropdown-menu" id="customerIdDropdown"></ul>-->
+<!--                                    </div>-->
+
+
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="inputcustomerName" class="form-label">Customer Name</label>-->
+<!--                                <input type="text" id="inputcustomerName" class="form-control" placeholder="Customer Name" readonly>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="inputItemId" class="form-label">Item ID</label>-->
+<!--&lt;!&ndash;                                <select id="itemIdDropdown" class="form-select">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option value="">Select Item ID</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </select>&ndash;&gt;-->
+<!--                                <button  class="form-select btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" id="inputItemId" aria-expanded="false">select Order Id</button>-->
+<!--                                <ul class="dropdown-menu" id="itemIdDropdown"></ul>-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="inputItemModel" class="form-label">Item Model</label>-->
+<!--                                <input type="text" id="inputItemModel" class="form-control" readonly>-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="inputUnitPrice" class="form-label">Item Unit Price</label>-->
+<!--                                <input type="number" id="inputUnitPrice" class="form-control" readonly>-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="inputItemquantity" class="form-label">Item Quantity</label>-->
+<!--                                <input type="number" id="inputItemquantity" class="form-control">-->
+<!--                            </div>-->
+
+<!--                            <div class="col-md-3 mb-3">-->
+<!--                                <label for="total" class="form-label">Total Cost </label>-->
+<!--                                <input type="text" id="total" class="form-control">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="d-flex">-->
+<!--                            <button type="button" id="addOrderBtn" class="btn btn-warning me-2">Add</button>-->
+<!--                            <button type="button" class="btn btn-primary me-2">Add New Order</button>-->
+<!--                            <button type="button" class="btn btn-success">Place Order</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--&lt;!&ndash;                <h2 class="text-center">Table of Orders</h2>&ndash;&gt;-->
+
+<!--                <table class="table table-bordered">-->
+<!--                    <thead class="table-dark">-->
+<!--                    <tr>-->
+<!--                        <th>Order ID</th>-->
+<!--                        <th>Customer ID</th>-->
+<!--                        <th>Customer Name</th>-->
+<!--                        <th>Item ID</th>-->
+<!--                        <th>Item Model</th>-->
+<!--                        <th>Unit Price</th>-->
+<!--                        <th>Qty</th>-->
+<!--                        <th>Total Cost</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody id="orderTableBody"></tbody>-->
+<!--                </table>-->
